@@ -32,6 +32,21 @@ class qbcurve(path.curve_pt):
 
 path.qbcurve =  qbcurve
 
+
+
+#def getX(self):
+#    return self.x_pt
+#
+#path.context.getX = getX
+
+
+#class pathitem:
+#
+#    def retContext(context):
+#        return context
+#
+#path.pathitem.retContext = pathitem.retContext
+
 # Create new quadratic bezier path that can be appending to existing path
 class qbcurveto(path.curveto_pt):
 
@@ -39,7 +54,7 @@ class qbcurveto(path.curveto_pt):
 
     __slots__ = "x1_pt", "y1_pt", "x2_pt", "y2_pt", "x3_pt", "y3_pt"
     def __init__(self, x1, y1, x2, y2):
-        # Incorrect values for first 2 x/y pairs used, which will subsequently be corrected
+        # Incorrect values for first 2 x/y pairs used, which will subsequently  be corrected
         # in append method
         path.curveto_pt.__init__(self,
                             unit.topt(x1), unit.topt(y1),
@@ -60,9 +75,9 @@ def append(self, apathitem):
     x =  unit.topt(self.normpath().atend()[0])
     y =  unit.topt(self.normpath().atend()[1])
 
-    # if apathiem is a qbcurveto then correct its definition
+    # if apathiem is a qbcurveto then tweak it's definition
     if isinstance(apathitem, path.qbcurveto):
-        a = quadToCub(x,y,apathitem.x1_pt,apathitem.y1_pt,apathitem.y2_pt,apathitem.x2_pt)
+        a = quadToCub(x,y,apathitem.x1_pt,apathitem.y1_pt,apathitem.x3_pt,apathitem.y3_pt)
         apathitem.x1_pt = a['x1']
         apathitem.y1_pt = a['y1']
         apathitem.x2_pt = a['x2']
